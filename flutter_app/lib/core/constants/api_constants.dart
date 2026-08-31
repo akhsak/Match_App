@@ -8,4 +8,5 @@ class ApiConstants {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String checkMatch = '/check-match';
+  static const String refreshToken = '/token/refresh';
 }

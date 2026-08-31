@@ -13,15 +13,10 @@ class AuthApiService {
   }) async {
     final response = await _apiClient.post(
       ApiConstants.login,
-      data: {
-        'email': email,
-        'password': password,
-      },
+      data: {'email': email, 'password': password},
     );
 
-    return AuthResponseModel.fromJson(
-      response.data as Map<String, dynamic>,
-    );
+    return AuthResponseModel.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<AuthResponseModel> signup({
@@ -31,15 +26,25 @@ class AuthApiService {
   }) async {
     final response = await _apiClient.post(
       ApiConstants.signup,
-      data: {
-        'email': email,
-        'password': password,
-        'full_name': fullName,
-      },
+      data: {'email': email, 'password': password, 'full_name': fullName},
     );
 
-    return AuthResponseModel.fromJson(
-      response.data as Map<String, dynamic>,
+    return AuthResponseModel.fromJson(response.data as Map<String, dynamic>);
+  }
+
+  Future<String> refreshAccessToken({required String refreshToken}) async {
+    final response = await _apiClient.post(
+      ApiConstants.refreshToken,
+      data: {'refresh': refreshToken},
     );
+
+    final data = response.data as Map<String, dynamic>;
+    final accessToken = data['access'] as String?;
+
+    if (accessToken == null || accessToken.isEmpty) {
+      throw Exception('Refresh token response did not include access token');
+    }
+
+    return accessToken;
   }
 }

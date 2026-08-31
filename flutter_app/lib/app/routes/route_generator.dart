@@ -3,7 +3,7 @@
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/match/domain/entities/match_result.dart';
-import '../../features/match/presentation/pages/match_page.dart';
+import '../../features/match/presentation/pages/match_input_screen.dart';
 import '../../features/match/presentation/pages/match_result_screen.dart';
 import 'app_routes.dart';
 

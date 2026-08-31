@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_app/app/app.dart';
@@ -20,11 +21,16 @@ void main() {
     await tester.pumpWidget(const App());
 
     expect(find.text('Login'), findsOneWidget);
-    expect(find.text('READY FOR A SURPRISE? SIGN IN TO YOUR ACCOUNT'), findsNothing);
+    expect(
+      find.text('READY FOR A SURPRISE? SIGN IN TO YOUR ACCOUNT'),
+      findsNothing,
+    );
     expect(find.text('LOGIN'), findsOneWidget);
   });
 
-  testWidgets('login leads to match form and result screen', (WidgetTester tester) async {
+  testWidgets('login leads to match form and result screen', (
+    WidgetTester tester,
+  ) async {
     tester.view.physicalSize = const Size(800, 1200);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() => tester.view.resetPhysicalSize());

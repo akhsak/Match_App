@@ -1,17 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/features/match/data/services/auth_api_services.dart';
 
-import '../../data/models/auth_response_model.dart';
+import '../../../match/data/models/auth_response_model.dart';
 import '../../../../core/storage/token_storage.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthApiService _authApiService;
   final TokenStorage _tokenStorage;
 
-  AuthProvider(
-    this._authApiService,
-    this._tokenStorage,
-  );
+  AuthProvider(this._authApiService, this._tokenStorage);
 
   bool _isLoading = false;
   bool _isAuthenticated = false;
@@ -23,10 +20,7 @@ class AuthProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   AuthResponseModel? get authResponse => _authResponse;
 
-  Future<bool> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<bool> login({required String email, required String password}) async {
     _setLoading(true);
     _clearError();
 
@@ -90,8 +84,47 @@ class AuthProvider extends ChangeNotifier {
 
     _authResponse = null;
     _isAuthenticated = false;
+    _errorMessage = null;
 
     notifyListeners();
+  }
+
+  Future<bool> checkAuthentication() async {
+    final accessToken = await _tokenStorage.getAccessToken();
+
+    if (accessToken == null || accessToken.trim().isEmpty) {
+      _isAuthenticated = false;
+      _errorMessage = null;
+      notifyListeners();
+      return false;
+    }
+
+    try {
+      final refreshToken = await _tokenStorage.getRefreshToken();
+
+      if (refreshToken != null && refreshToken.trim().isNotEmpty) {
+        final newAccessToken = await _authApiService.refreshAccessToken(
+          refreshToken: refreshToken,
+        );
+
+        await _tokenStorage.saveTokens(
+          accessToken: newAccessToken,
+          refreshToken: refreshToken,
+        );
+      }
+
+      _isAuthenticated = true;
+      _errorMessage = null;
+      notifyListeners();
+      return true;
+    } catch (_) {
+      await _tokenStorage.clearTokens();
+      _authResponse = null;
+      _isAuthenticated = false;
+      _errorMessage = null;
+      notifyListeners();
+      return false;
+    }
   }
 
   void _setLoading(bool value) {

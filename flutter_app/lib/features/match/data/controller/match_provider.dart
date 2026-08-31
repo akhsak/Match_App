@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/features/match/data/services/match_api_services.dart';
 
-import '../../data/models/match_result_model.dart';
+import '../models/match_result_model.dart';
 
 class MatchProvider extends ChangeNotifier {
   final MatchApiService _matchApiService;
