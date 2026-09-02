@@ -6,7 +6,9 @@ plugins {
 
 android {
     namespace = "com.example.flutter_app"
-    compileSdk = 37
+    // Use the SDK level supplied by the installed Flutter SDK (currently 36).
+    // `37` refers to a preview platform, which is not installed as android-37.
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

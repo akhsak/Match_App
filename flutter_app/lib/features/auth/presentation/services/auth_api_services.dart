@@ -1,6 +1,7 @@
+import 'package:flutter_app/features/auth/presentation/model/auth_response_model.dart';
+
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/network/api_client.dart';
-import '../models/auth_response_model.dart';
 
 class AuthApiService {
   final ApiClient _apiClient;

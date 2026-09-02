@@ -19,8 +19,10 @@ pluginManagement {
 
 plugins {
     id("dev.flutter.flutter-plugin-loader") version "1.0.0"
-    id("com.android.application") version "9.0.1" apply false
-    id("org.jetbrains.kotlin.android") version "2.3.20" apply false
+    // Keep these aligned with Flutter plugins such as shared_preferences.
+    // AGP 9 is not yet compatible with the Android plugin ecosystem used here.
+    id("com.android.application") version "8.13.1" apply false
+    id("org.jetbrains.kotlin.android") version "2.3.0" apply false
 }
 
 include(":app")

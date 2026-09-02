@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_app/features/match/data/services/auth_api_services.dart';
+import 'package:flutter_app/features/auth/presentation/model/auth_response_model.dart';
+import 'package:flutter_app/features/auth/presentation/services/auth_api_services.dart';
 
-import '../../../match/data/models/auth_response_model.dart';
 import '../../../../core/storage/token_storage.dart';
 
 class AuthProvider extends ChangeNotifier {
